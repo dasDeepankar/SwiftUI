@@ -5,6 +5,7 @@
 //  Created by Deepankar Das on 14/09/25.
 //
 
+import SwiftData
 import SwiftUI
 
 struct AddNew: View {
@@ -16,9 +17,9 @@ struct AddNew: View {
     @Binding var path : NavigationPath
     @Environment(\.dismiss) private var dismiss
     
-    let categories: [String] = ["Personal", "Business"]
+    let categories: [String] = [ExpenseType.personal.rawValue, ExpenseType.business.rawValue]
     
-    var expenses : Expenses
+    @Environment(\.modelContext) var modelContext
     
     var body: some View {
         Form {
@@ -34,11 +35,11 @@ struct AddNew: View {
         .navigationBarBackButtonHidden()
         .navigationBarTitleDisplayMode( .inline )
         .toolbar {
-    
+            
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Save"){
-                    let item = ExpenseItem(name: name, type: type, amount: amount)
-                    expenses.items.append(item)
+                    let item = Expense(name: name, type: type, amount: amount)
+                    modelContext.insert(item)
                     dismiss()
                 }
             }
@@ -47,8 +48,5 @@ struct AddNew: View {
 }
 
 #Preview {
-    AddNew(
-        path: .constant(NavigationPath()),
-        expenses: Expenses()
-    )
+    AddNew(path: .constant(NavigationPath()))
 }
