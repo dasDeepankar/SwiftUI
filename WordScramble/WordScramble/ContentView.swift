@@ -39,7 +39,10 @@ struct ContentView: View {
                     HStack{
                         Image(systemName: "\(word.count).circle")
                         Text(word)
-                    }
+                    }.accessibilityElement()
+//                        .accessibilityLabel("\(word), \(word.count) letters")
+                        .accessibilityLabel(word)
+                        .accessibilityHint("\(word.count)-letter")
                 }
             }.navigationTitle(rootWord)
                 .onSubmit(addNewWord)
