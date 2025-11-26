@@ -30,7 +30,9 @@ struct ExpensesList: View {
                             .font(.headline)
                         
                             .foregroundColor(currencyColor(at: expense.amount))
-                    }
+                    }.accessibilityElement()
+                        .accessibilityLabel("\(expense.name), \(expense.amount, format: .currency(code: Locale.current.currency?.identifier ?? "USD"))")
+                        .accessibilityHint("\(expense.type)")
                 }.onDelete(perform: removeItem)
             }
         }
